@@ -1,65 +1,137 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+
+import Step1 from "@/components/Step1";
+import Step2 from "@/components/Step2";
+import Step3 from "@/components/Step3";
+import Step4 from "@/components/Step4";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  const [step, setStep] = useState(1);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+
+          setTimeout(() => {
+            setLoading(false);
+          }, 250);
+
+          return 100;
+        }
+
+        return prev + 2;
+      });
+    }, 55);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-black text-white flex items-center justify-center overflow-hidden relative">
+
+        {/* Fondos */}
+        <div className="absolute w-[700px] h-[700px] bg-white/10 rounded-full blur-[180px] animate-pulse" />
+        <div className="absolute top-20 left-20 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl animate-bounce" />
+        <div className="absolute bottom-20 right-20 w-52 h-52 bg-white/10 rounded-full blur-3xl animate-pulse" />
+
+        {/* Grid */}
+        <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:60px_60px]" />
+
+        <div className="relative text-center px-6 w-full max-w-2xl animate-[fadeUp_1s_ease-out]">
+
+          <p className="text-xs tracking-[0.5em] text-gray-500 mb-5">
+            ACCESO ANTICIPADO
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+          <h1 className="text-6xl md:text-8xl font-semibold tracking-[-0.05em] leading-none mb-6">
+            ONE{" "}
+            <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+              METER
+            </span>
+          </h1>
+
+          <p className="text-gray-400 text-sm md:text-base tracking-[0.35em] mb-10">
+            PREPARANDO EXPERIENCIA
+          </p>
+
+          {/* Barra real */}
+          <div className="relative w-full h-[10px] bg-white/10 rounded-full overflow-hidden border border-white/10">
+
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-white via-gray-300 to-white transition-all duration-100"
+              style={{ width: `${progress}%` }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            {/* brillo */}
+            <div
+              className="absolute top-0 h-full w-14 bg-white/40 blur-md"
+              style={{
+                left: `calc(${progress}% - 28px)`,
+                transition: "all 0.1s linear",
+              }}
+            />
+
+          </div>
+
+          <p className="mt-5 text-sm tracking-[0.25em] text-gray-500">
+            {progress}%
+          </p>
+
+          <div className="space-y-2 mt-6">
+            <p className="text-gray-300 text-sm">
+              Inicializando entorno seguro...
+            </p>
+
+            <p className="text-gray-500 text-xs tracking-[0.25em]">
+              INVERSIÓN INTELIGENTE
+            </p>
+          </div>
+
         </div>
+
+        <style jsx global>{`
+          @keyframes fadeUp {
+            0% {
+              opacity: 0;
+              transform: translateY(24px) scale(0.98);
+              filter: blur(12px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+              filter: blur(0);
+            }
+          }
+        `}</style>
+
       </main>
-    </div>
+    );
+  }
+
+  return (
+    <main className="min-h-screen text-white flex items-center justify-center p-6 bg-gradient-to-br from-slate-950 via-black to-slate-900 relative overflow-hidden">
+
+      <div className="absolute top-[-180px] left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-white/5 blur-[180px] rounded-full" />
+      <div className="absolute bottom-[-200px] right-[-120px] w-[500px] h-[500px] bg-blue-500/10 blur-[180px] rounded-full" />
+
+      <div className="relative w-full max-w-3xl bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl p-8 md:p-12">
+
+        {step === 1 && <Step1 setStep={setStep} setAmount={setAmount} />}
+        {step === 2 && <Step2 amount={amount} setStep={setStep} />}
+        {step === 3 && <Step3 amount={amount} setStep={setStep} />}
+        {step === 4 && <Step4 />}
+
+      </div>
+
+    </main>
   );
 }
