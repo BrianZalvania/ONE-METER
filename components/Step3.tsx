@@ -3,10 +3,11 @@
 import { useState } from "react";
 
 type Props = {
+  amount: number;
   setStep: (value: number) => void;
 };
 
-export default function Step3({ setStep }: Props) {
+export default function Step3({ amount, setStep }: Props) {
   const [email, setEmail] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
