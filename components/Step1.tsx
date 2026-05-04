@@ -1,126 +1,191 @@
+"use client";
+
+import { useState } from "react";
+import {
+  Sprout,
+  TrendingUp,
+  Rocket,
+  Star,
+  Building2,
+  Lock,
+  BarChart3,
+  ShieldCheck,
+  ArrowRight,
+  Home,
+} from "lucide-react";
+
 type Props = {
   setStep: (value: number) => void;
   setAmount: (value: number) => void;
 };
 
-export default function Step1({ setStep, setAmount }: Props) {
-  function selectAmount(value: number) {
-    setAmount(value);
-    setStep(2);
-  }
+const options = [
+  { value: 300000, title: "$300.000", desc: "Para empezar sin esfuerzo", icon: Sprout, badge: "Inicio inteligente" },
+  { value: 500000, title: "$500.000", desc: "El equilibrio perfecto para avanzar", icon: TrendingUp, badge: "El punto ideal" },
+  { value: 700000, title: "$700.000", desc: "Avance más rápido", icon: Rocket, badge: "Más velocidad" },
+  { value: 1000000, title: "$1.000.000", desc: "Máximo potencial", icon: Star, badge: "Nivel premium" },
+];
 
-  const options = [
-    {
-      value: 300000,
-      label: "$300.000",
-      desc: "Inicio estratégico",
-    },
-    {
-      value: 500000,
-      label: "$500.000",
-      desc: "Crecimiento sólido",
-    },
-    {
-      value: 700000,
-      label: "$700.000",
-      desc: "Avance acelerado",
-    },
-    {
-      value: 1000000,
-      label: "$1.000.000",
-      desc: "Máxima proyección",
-    },
-  ];
+export default function Step1({ setStep, setAmount }: Props) {
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <div className="relative text-center animate-[fadeUp_0.8s_ease-out]">
+    <div className="min-h-screen bg-[#efe7db] relative overflow-hidden">
 
-      {/* Glow premium */}
-      <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-white/10 blur-[160px] rounded-full pointer-events-none" />
-
-      {/* Badge */}
-      <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl text-sm text-gray-300 mb-8">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        ACCESO PRIORITARIO
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 hidden md:block">
+        <img src="/images/casastep1.jpeg" className="w-full h-full object-cover object-right" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#efe7db] via-[#efe7db]/85 to-transparent" />
       </div>
 
-      {/* Title */}
-      <h1 className="relative text-5xl md:text-7xl font-semibold tracking-[-0.05em] leading-tight max-w-4xl mx-auto mb-5">
-        Empezá hoy a construir
-        <span className="block bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
-          tu próxima propiedad
-        </span>
-      </h1>
+      <div className="md:hidden h-[220px] relative">
+        <img src="/images/casastep1.jpeg" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#efe7db]" />
+      </div>
 
-      {/* Subtitle */}
-      <p className="relative text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-        Elegí cuánto destinarías por mes y descubrí cuánto podrías avanzar en metros cuadrados reales.
-      </p>
+      {/* CONTENIDO */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-16 py-8 md:py-12">
 
-      {/* Options */}
-      <div className="relative grid gap-4">
+        {/* BADGE */}
+        <div className="inline-flex items-center gap-2 bg-white/90 px-5 py-2 rounded-full text-sm text-gray-700 shadow-sm mb-5">
+          ⚡ Simulación rápida · En 10 segundos ves tu resultado
+        </div>
 
-        {options.map((item) => (
-          <button
-            key={item.value}
-            onClick={() => selectAmount(item.value)}
-            className="group relative overflow-hidden w-full rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl px-6 py-5 text-left transition-all duration-300 hover:scale-[1.018] hover:border-white/25 hover:bg-white/10"
-          >
-            {/* brillo hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        {/* TITULO */}
+        <h1 className="text-[30px] md:text-[52px] font-semibold leading-[1.1] text-gray-900 mb-4 max-w-3xl">
+          Descubrí cuántos <span className="text-green-600">m²</span> podés construir
+          con tu ahorro
+        </h1>
 
-            <div className="relative flex items-center justify-between gap-5">
+        {/* SUB */}
+        <p className="text-[14px] md:text-[17px] text-gray-700 mb-6 max-w-2xl leading-relaxed">
+          Elegí cuánto podés ahorrar por mes y descubrí cuántos{" "}
+          <span className="text-green-600 font-medium">metros cuadrados</span> podés construir.
+        </p>
 
-              <div>
-                <p className="text-2xl md:text-3xl font-semibold text-white">
-                  {item.label}
-                </p>
+        {/* BOTONES */}
+        <div className="space-y-2 md:space-y-3 max-w-2xl">
+          {options.map((opt) => {
+            const active = hovered === opt.value;
+            const Icon = opt.icon;
 
-                <p className="text-sm md:text-base text-gray-400 mt-1 group-hover:text-gray-200 transition">
-                  {item.desc}
-                </p>
-              </div>
+            return (
+              <button
+                key={opt.value}
+                onMouseEnter={() => setHovered(opt.value)}
+                onMouseLeave={() => setHovered(null)}
+                onClick={() => {
+                  setSelected(opt.value);
+                  setAmount(opt.value);
+                  setTimeout(() => setStep(2), 180);
+                }}
+                className={`w-full flex items-center justify-between rounded-2xl px-6 h-[80px] transition-all duration-200
+                ${
+                  active
+                    ? "bg-white border-2 border-green-600 shadow-lg scale-[1.01]"
+                    : "bg-white border border-[#e5e7eb]"
+                }
+                ${
+                  selected === opt.value
+                    ? "scale-[1.04] shadow-[0_10px_25px_rgba(34,197,94,0.35)]"
+                    : ""
+                }`}
+              >
+                <div className="flex items-center gap-4">
 
-              <div className="flex items-center gap-3">
+                  <div className="w-14 h-14 rounded-full bg-[#dff3e6] flex items-center justify-center">
+                    <Icon size={28} strokeWidth={2.5} className="text-green-700" />
+                  </div>
 
-                <span className="hidden md:block text-sm text-gray-500 group-hover:text-gray-300 transition">
-                  Seleccionar
-                </span>
+                  <div className="text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-[17px] font-semibold ${active ? "text-green-700" : "text-gray-900"}`}>
+                        {opt.title}
+                      </span>
 
-                <div className="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center text-xl group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300">
-                  →
+                      {active && opt.badge && (
+                        <span className="text-[11px] bg-[#e6f4ea] text-green-700 px-2.5 py-[2px] rounded-full font-medium flex items-center gap-1">
+                          ⭐ {opt.badge}
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-[12px] text-gray-500">
+                      {opt.desc}
+                    </p>
+                  </div>
                 </div>
 
+                <div
+                  className={`flex items-center justify-center rounded-full w-12 h-12 transition-all
+                  ${active ? "bg-green-600 text-white shadow-md" : "border border-gray-300 text-gray-400"}
+                  ${selected === opt.value ? "scale-110 rotate-6" : ""}
+                  `}
+                >
+                  <ArrowRight size={26} strokeWidth={3} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* SIN COMPROMISO */}
+        <div className="mt-5 max-w-2xl border border-[#e5e7eb] bg-white/90 rounded-xl px-5 py-3 flex items-center gap-3 text-[13px] text-gray-700">
+          <ShieldCheck className="text-green-700" size={20} />
+          <span>Sin compromiso. Podés ajustar el monto cuando quieras.</span>
+        </div>
+
+        {/* BENEFICIOS */}
+        <div className="mt-6 max-w-3xl bg-white/90 border border-[#e5e7eb] rounded-xl py-5 px-6 grid grid-cols-1 md:grid-cols-3">
+
+          {[ 
+            { icon: Building2, title: "Se ajusta al costo real", desc: "Tu ahorro siempre acompaña el valor real." },
+            { icon: Lock, title: "Sin permanencia", desc: "Podés entrar y salir cuando quieras." },
+            { icon: BarChart3, title: "Ves tus m² en tiempo real", desc: "Seguí tu progreso en todo momento." },
+          ].map((b, i) => {
+            const Icon = b.icon;
+            return (
+              <div key={i} className={`group flex flex-col items-center text-center px-4
+              ${i !== 0 ? "border-t md:border-t-0 md:border-l border-[#e5e7eb] pt-4 md:pt-0" : ""}`}>
+                
+                <div className="w-12 h-12 rounded-full bg-[#dff3e6] flex items-center justify-center mb-2 
+                transition-all duration-200 group-hover:scale-110">
+                  <Icon size={24} className="text-green-700" />
+                </div>
+
+                <p className="font-semibold text-[13px] text-gray-900">{b.title}</p>
+                <p className="text-gray-600 text-[11px] mt-1">{b.desc}</p>
               </div>
+            );
+          })}
 
+        </div>
+
+        {/* BLOQUE FINAL */}
+        <div className="mt-6 max-w-3xl bg-white/90 border border-[#e5e7eb] rounded-xl px-6 py-4 flex items-center justify-between gap-6
+        transition-all duration-300 hover:shadow-xl hover:-translate-y-[2px] hover:border-green-500">
+
+          <div className="flex items-center gap-3 max-w-md">
+            <div className="w-12 h-12 rounded-full bg-[#dff3e6] flex items-center justify-center">
+              <Home size={24} className="text-green-700" />
             </div>
-          </button>
-        ))}
+
+            <p className="text-gray-900 text-[14px] leading-relaxed font-medium">
+              Un pequeño ahorro hoy, puede ser muchos metros mañana.
+            </p>
+          </div>
+
+          <img src="/images/casa1.png" className="w-32 md:w-40 opacity-90" />
+
+        </div>
+
+        {/* FOOTER */}
+        <div className="mt-4 text-[11px] text-gray-500 flex items-center gap-2">
+          🔒 Tus datos están protegidos. No compartimos tu información.
+        </div>
 
       </div>
-
-      {/* Footer */}
-      <div className="relative mt-8">
-        <p className="text-sm text-gray-500">
-          Simulación informativa · Sin compromiso
-        </p>
-      </div>
-
-      <style jsx global>{`
-        @keyframes fadeUp {
-          0% {
-            opacity: 0;
-            transform: translateY(24px) scale(0.98);
-            filter: blur(10px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-          }
-        }
-      `}</style>
-
     </div>
   );
 }
