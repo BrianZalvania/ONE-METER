@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   ArrowRight,
   Home,
+  Zap,
 } from "lucide-react";
 
 type Props = {
@@ -49,7 +50,7 @@ export default function Step1({ setStep, setAmount }: Props) {
 
         {/* BADGE */}
         <div className="inline-flex items-center gap-2 bg-white/90 px-5 py-2 rounded-full text-sm text-gray-700 shadow-sm mb-5">
-          ⚡ Simulación rápida · En 10 segundos ves tu resultado
+          <Zap size={18} className="text-green-600" strokeWidth={2.5} /> Simulación rápida · En 10 segundos ves tu resultado
         </div>
 
         {/* TITULO */}
@@ -182,7 +183,7 @@ export default function Step1({ setStep, setAmount }: Props) {
 
         {/* FOOTER */}
         <div className="mt-4 text-[11px] text-gray-500 flex items-center gap-2">
-          🔒 Tus datos están protegidos. No compartimos tu información.
+          <Lock size={14} className="text-green-600" strokeWidth={2.5} /> Tus datos están protegidos. No compartimos tu información.
         </div>
 
       </div>
