@@ -36,15 +36,13 @@ export default function Step1({ setStep, setAmount }: Props) {
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,246,226,0.45),transparent_62%)]" />
 
-      <div className="absolute inset-y-0 left-1/2 w-full max-w-[760px] md:max-w-[900px] -translate-x-1/2 overflow-hidden bg-[#efe7db] shadow-[0_0_90px_rgba(75,55,25,0.26)]">
-        <img
-          src="/images/step1fondo.png"
-          className="absolute inset-0 h-full w-full object-cover object-[68%_top] md:object-right"
-          alt="Casa moderna"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#efe7db]/98 via-[#efe7db]/84 to-[#efe7db]/12" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#efe7db]/8 via-transparent to-[#c8b894]/38" />
-      </div>
+      <div className="absolute inset-y-0 left-1/2 w-full max-w-[760px] md:max-w-[900px] -translate-x-1/2 overflow-hidden bg-gradient-to-b from-[#efe7db] via-[#e7dcc9] to-[#d6c1a0] shadow-[0_0_90px_rgba(75,55,25,0.26)]">
+
+  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.45),transparent_55%)]" />
+
+  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#c8b894]/28" />
+
+</div>
 
       <div className="relative z-10 flex h-full w-full items-center justify-center px-4 py-2">
         <div className="w-full max-w-[690px] md:max-w-[760px]">
