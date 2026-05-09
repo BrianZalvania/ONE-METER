@@ -1,18 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mail, RefreshCw, ShieldCheck } from "lucide-react";
+import {
+  Mail,
+  RefreshCw,
+  ShieldCheck,
+  Copy,
+  CheckCheck,
+} from "lucide-react";
 
 type Lead = {
   id: number;
   email: string;
   amount: number;
+  contacted: number;
   created_at: string;
 };
 
 export default function LeadsAdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const money = (value: number) =>
     value.toLocaleString("es-AR", {
@@ -41,6 +49,30 @@ export default function LeadsAdminPage() {
     }
   };
 
+  const copyEmail = async (id: number, email: string) => {
+    await navigator.clipboard.writeText(email);
+    setCopiedId(id);
+
+    setTimeout(() => {
+      setCopiedId(null);
+    }, 1600);
+  };
+
+  const toggleContacted = async (id: number, contacted: number) => {
+    await fetch("/api/leads", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        contacted: contacted ? 0 : 1,
+      }),
+    });
+
+    getLeads();
+  };
+
   useEffect(() => {
     getLeads();
   }, []);
@@ -61,7 +93,7 @@ export default function LeadsAdminPage() {
               </h1>
 
               <p className="mt-2 text-sm text-gray-700 md:text-base">
-                Emails registrados, monto elegido y fecha de ingreso.
+                Emails registrados, monto elegido, fecha y estado de respuesta.
               </p>
             </div>
 
@@ -97,7 +129,7 @@ export default function LeadsAdminPage() {
 
           <div className="mt-6 overflow-hidden rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 shadow-lg">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] border-collapse">
+              <table className="w-full min-w-[920px] border-collapse">
                 <thead className="bg-[#e4d6bd]">
                   <tr>
                     <th className="px-4 py-3 text-left text-sm font-bold text-gray-800">
@@ -115,6 +147,14 @@ export default function LeadsAdminPage() {
                     <th className="px-4 py-3 text-left text-sm font-bold text-gray-800">
                       Fecha
                     </th>
+
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-800">
+                      Estado
+                    </th>
+
+                    <th className="px-4 py-3 text-left text-sm font-bold text-gray-800">
+                      Acciones
+                    </th>
                   </tr>
                 </thead>
 
@@ -122,7 +162,7 @@ export default function LeadsAdminPage() {
                   {loading ? (
                     <tr>
                       <td
-                        colSpan={4}
+                        colSpan={6}
                         className="px-4 py-8 text-center text-gray-500"
                       >
                         Cargando leads...
@@ -131,7 +171,7 @@ export default function LeadsAdminPage() {
                   ) : leads.length === 0 ? (
                     <tr>
                       <td
-                        colSpan={4}
+                        colSpan={6}
                         className="px-4 py-8 text-center text-gray-500"
                       >
                         Todavía no hay emails registrados.
@@ -141,7 +181,9 @@ export default function LeadsAdminPage() {
                     leads.map((lead) => (
                       <tr
                         key={lead.id}
-                        className="border-t border-[#eadcc5] transition hover:bg-[#fff8ec]"
+                        className={`border-t border-[#eadcc5] transition hover:bg-[#fff8ec] ${
+                          lead.contacted ? "bg-green-50/40" : ""
+                        }`}
                       >
                         <td className="px-4 py-3 text-sm text-gray-700">
                           {lead.id}
@@ -157,6 +199,49 @@ export default function LeadsAdminPage() {
 
                         <td className="px-4 py-3 text-sm text-gray-700">
                           {new Date(lead.created_at).toLocaleString("es-AR")}
+                        </td>
+
+                        <td className="px-4 py-3">
+                          <span
+                            className={`inline-flex rounded-full px-3 py-1 text-xs font-bold ${
+                              lead.contacted
+                                ? "bg-green-100 text-green-700"
+                                : "bg-yellow-100 text-yellow-700"
+                            }`}
+                          >
+                            {lead.contacted ? "Respondido" : "Pendiente"}
+                          </span>
+                        </td>
+
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => copyEmail(lead.id, lead.email)}
+                              className="inline-flex items-center gap-1 rounded-lg border border-[#dcc9a8] bg-white px-3 py-1.5 text-xs font-bold text-gray-700 transition hover:bg-[#f7efe2]"
+                            >
+                              <Copy size={14} />
+                              {copiedId === lead.id ? "Copiado" : "Copiar"}
+                            </button>
+
+                            <button
+                              onClick={() =>
+                                toggleContacted(
+                                  lead.id,
+                                  lead.contacted
+                                )
+                              }
+                              className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold text-white transition ${
+                                lead.contacted
+                                  ? "bg-green-700 hover:bg-green-800"
+                                  : "bg-yellow-500 hover:bg-yellow-600"
+                              }`}
+                            >
+                              <CheckCheck size={14} />
+                              {lead.contacted
+                                ? "Marcar pendiente"
+                                : "Marcar respondido"}
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))

@@ -37,13 +37,35 @@ export async function POST(req: Request) {
 export async function GET() {
   try {
     const [rows] = await db.query(
-      "SELECT id, email, amount, created_at FROM leads ORDER BY created_at DESC"
+      "SELECT id, email, amount, contacted, created_at FROM leads ORDER BY created_at DESC"
     );
 
     return NextResponse.json(rows);
   } catch {
     return NextResponse.json(
       { error: "Error al obtener los leads." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  try {
+    const body = await req.json();
+
+    const { id, contacted } = body;
+
+    await db.query(
+      "UPDATE leads SET contacted = ? WHERE id = ?",
+      [contacted, id]
+    );
+
+    return NextResponse.json({
+      success: true,
+    });
+  } catch {
+    return NextResponse.json(
+      { error: "No se pudo actualizar." },
       { status: 500 }
     );
   }
