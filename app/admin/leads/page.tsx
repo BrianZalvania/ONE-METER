@@ -126,95 +126,99 @@ export default function LeadsAdminPage() {
               {loading ? "Actualizando..." : "Actualizar ahora"}
             </button>
           </div>
-{/* MOBILE CARDS */}
-<div className="mt-6 space-y-4 md:hidden">
-  {loading ? (
-    <div className="rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 px-4 py-8 text-center text-sm text-gray-500">
-      Cargando leads...
-    </div>
-  ) : leads.length === 0 ? (
-    <div className="rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 px-4 py-8 text-center text-sm text-gray-500">
-      Todavía no hay emails registrados.
-    </div>
-  ) : (
-    leads.map((lead) => (
-      <div
-        key={lead.id}
-        className={`rounded-3xl border border-[#d8ccb7] bg-[#fffaf2]/95 p-4 shadow-lg ${
-          lead.contacted ? "bg-green-50/50" : ""
-        }`}
-      >
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-[11px] font-bold uppercase tracking-wide text-gray-500">
-              Lead #{lead.id}
-            </p>
 
-            <p className="mt-1 break-all text-[15px] font-black text-gray-900">
-              {lead.email}
-            </p>
+          {/* MOBILE CARDS */}
+          <div className="mt-6 space-y-4 md:hidden">
+            {loading ? (
+              <div className="rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 px-4 py-8 text-center text-sm text-gray-500">
+                Cargando leads...
+              </div>
+            ) : leads.length === 0 ? (
+              <div className="rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 px-4 py-8 text-center text-sm text-gray-500">
+                Todavía no hay emails registrados.
+              </div>
+            ) : (
+              leads.map((lead) => (
+                <div
+                  key={lead.id}
+                  className={`rounded-3xl border border-[#d8ccb7] bg-[#fffaf2]/95 p-4 shadow-lg ${
+                    lead.contacted ? "bg-green-50/50" : ""
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-[11px] font-bold uppercase tracking-wide text-gray-500">
+                        Lead #{lead.id}
+                      </p>
+
+                      <p className="mt-1 break-all text-[15px] font-black text-gray-900">
+                        {lead.email}
+                      </p>
+                    </div>
+
+                    <span
+                      className={`shrink-0 rounded-full px-3 py-1 text-[10px] font-black ${
+                        lead.contacted
+                          ? "bg-green-100 text-green-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {lead.contacted ? "Respondido" : "Pendiente"}
+                    </span>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#eadcc5] bg-white/60 p-3">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase text-gray-500">
+                        Monto
+                      </p>
+
+                      <p className="mt-1 text-sm font-black text-green-700">
+                        {money(lead.amount)}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-[10px] font-bold uppercase text-gray-500">
+                        Fecha
+                      </p>
+
+                      <p className="mt-1 text-xs font-semibold leading-snug text-gray-700">
+                        {new Date(lead.created_at).toLocaleString("es-AR", {
+                          hour12: false,
+                        })}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => copyEmail(lead.id, lead.email)}
+                      className="inline-flex items-center justify-center gap-1 rounded-xl border border-[#dcc9a8] bg-white px-3 py-2.5 text-xs font-bold text-gray-700 transition hover:bg-[#f7efe2]"
+                    >
+                      <Copy size={14} />
+                      {copiedId === lead.id ? "Copiado" : "Copiar"}
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        toggleContacted(lead.id, lead.contacted)
+                      }
+                      className={`inline-flex items-center justify-center gap-1 rounded-xl px-3 py-2.5 text-xs font-bold text-white transition ${
+                        lead.contacted
+                          ? "bg-green-700 hover:bg-green-800"
+                          : "bg-yellow-500 hover:bg-yellow-600"
+                      }`}
+                    >
+                      <CheckCheck size={14} />
+                      {lead.contacted ? "Pendiente" : "Respondido"}
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
 
-          <span
-            className={`shrink-0 rounded-full px-3 py-1 text-[10px] font-black ${
-              lead.contacted
-                ? "bg-green-100 text-green-700"
-                : "bg-yellow-100 text-yellow-700"
-            }`}
-          >
-            {lead.contacted ? "Respondido" : "Pendiente"}
-          </span>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#eadcc5] bg-white/60 p-3">
-          <div>
-            <p className="text-[10px] font-bold uppercase text-gray-500">
-              Monto
-            </p>
-
-            <p className="mt-1 text-sm font-black text-green-700">
-              {money(lead.amount)}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[10px] font-bold uppercase text-gray-500">
-              Fecha
-            </p>
-
-            <p className="mt-1 text-xs font-semibold leading-snug text-gray-700">
-              {new Date(lead.created_at).toLocaleString("es-AR")}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          <button
-            onClick={() => copyEmail(lead.id, lead.email)}
-            className="inline-flex items-center justify-center gap-1 rounded-xl border border-[#dcc9a8] bg-white px-3 py-2.5 text-xs font-bold text-gray-700 transition hover:bg-[#f7efe2]"
-          >
-            <Copy size={14} />
-            {copiedId === lead.id ? "Copiado" : "Copiar"}
-          </button>
-
-          <button
-            onClick={() =>
-              toggleContacted(lead.id, lead.contacted)
-            }
-            className={`inline-flex items-center justify-center gap-1 rounded-xl px-3 py-2.5 text-xs font-bold text-white transition ${
-              lead.contacted
-                ? "bg-green-700 hover:bg-green-800"
-                : "bg-yellow-500 hover:bg-yellow-600"
-            }`}
-          >
-            <CheckCheck size={14} />
-            {lead.contacted ? "Pendiente" : "Respondido"}
-          </button>
-        </div>
-      </div>
-    ))
-  )}
-</div>
           <div className="mt-6 hidden overflow-hidden rounded-2xl border border-[#d8ccb7] bg-[#fffaf2]/92 shadow-lg md:block">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[920px] border-collapse">
@@ -286,7 +290,9 @@ export default function LeadsAdminPage() {
                         </td>
 
                         <td className="px-4 py-3 text-sm text-gray-700">
-                          {new Date(lead.created_at).toLocaleString("es-AR")}
+                          {new Date(lead.created_at).toLocaleString("es-AR", {
+                            hour12: false,
+                          })}
                         </td>
 
                         <td className="px-4 py-3">
@@ -338,7 +344,6 @@ export default function LeadsAdminPage() {
               </table>
             </div>
           </div>
-
         </div>
       </div>
     </main>
