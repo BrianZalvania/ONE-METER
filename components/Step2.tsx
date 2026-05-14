@@ -84,7 +84,7 @@ export default function Step2({ amount, setStep }: Props) {
 
           {/* TITULO */}
           <h1 className="mt-2 text-[23px] font-bold leading-[1.03] tracking-[-0.04em] text-gray-950 md:mt-4 md:text-[44px]">
-            Con este nivel, ya estás construyendo tu{" "}
+            Con este nivel, ya estás dando un paso real hacia tu{" "}
             <span className="text-green-700">futuro hogar</span>
           </h1>
 

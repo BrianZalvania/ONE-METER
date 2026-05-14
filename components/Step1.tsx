@@ -52,14 +52,15 @@ export default function Step1({ setStep, setAmount }: Props) {
             Simulación rápida · En 10 segundos ves tu resultado
           </div>
 
-          <h1 className="mt-2 max-w-[560px] text-[24px] font-semibold leading-[1.02] text-gray-950 sm:text-[30px] md:text-[46px]">
-            Descubrí cuántos <span className="text-green-600">m²</span> podés construir
-            con tu ahorro
+          <h1 className="mt-2 max-w-[620px] text-[24px] font-semibold leading-[1.02] text-gray-950 sm:text-[30px] md:text-[46px]">
+            ¿Querés tu propia vivienda y no sabés por dónde empezar?
+            <br />
+            Simula ahorrar en <span className="text-green-600">metros cuadrados</span>.
           </h1>
 
           <p className="mt-2 max-w-[520px] text-[12px] leading-snug text-gray-700 sm:text-[13px] md:text-[15px]">
             Elegí cuánto podés ahorrar por mes y descubrí cuántos{" "}
-            <span className="font-medium text-green-600">metros cuadrados</span> podés construir.
+            <span className="font-medium text-green-600">metros cuadrados</span> podés alcanzar.
           </p>
 
           <div className="mt-3 w-full space-y-2 md:max-w-2xl">
