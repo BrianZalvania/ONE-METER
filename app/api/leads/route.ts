@@ -19,8 +19,13 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
-    if (error.code === "ER_DUP_ENTRY") {
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "ER_DUP_ENTRY"
+    ) {
       return NextResponse.json(
         { error: "Este email ya fue registrado." },
         { status: 409 }
