@@ -61,8 +61,8 @@ export default function Step3V2({ amount, setStep }: Props) {
   return (
     <section className="min-h-[100dvh] bg-[#f7f4ed] px-3 py-3 text-[#071827]">
       <div className="mx-auto flex min-h-[calc(100dvh-24px)] w-full max-w-[700px] flex-col overflow-hidden rounded-[22px] bg-[#fffdf8] px-4 pb-4 pt-3 shadow-[0_18px_60px_rgba(28,35,25,0.08)] sm:h-[calc(100dvh-24px)] sm:px-6">
-        <div className="relative grid min-h-[184px] shrink-0 grid-cols-[1fr_150px] overflow-hidden rounded-[12px] min-[430px]:grid-cols-[1fr_164px] sm:block sm:min-h-[292px]">
-          <div className="relative z-10 max-w-none pt-5 sm:max-w-[335px] sm:pt-9">
+        <div className="relative min-h-[202px] shrink-0 overflow-hidden rounded-[12px] min-[430px]:min-h-[214px] sm:block sm:min-h-[292px]">
+          <div className="relative z-10 max-w-[178px] pt-5 min-[430px]:max-w-[196px] sm:max-w-[335px] sm:pt-9">
             <div className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[#edf4df] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-[#2e6b32] sm:mb-4 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-[11px]">
               <CheckCircle2 size={12} className="sm:h-[15px] sm:w-[15px]" />
               Paso 3 de 3
@@ -79,14 +79,14 @@ export default function Step3V2({ amount, setStep }: Props) {
             </div>
           </div>
 
-          <div className="relative z-0 mt-4 h-[166px] self-end min-[430px]:h-[176px] sm:hidden">
+          <div className="pointer-events-none absolute bottom-[0px] right-[-2px] z-0 h-[186px] w-[216px] min-[430px]:right-[0px] min-[430px]:h-[202px] min-[430px]:w-[236px] sm:hidden">
             <Image
               src="/images/step3v3.png"
               alt=""
               fill
               priority
-              sizes="(min-width: 430px) 164px, 150px"
-              className="object-contain object-left-bottom"
+              sizes="(min-width: 430px) 236px, 216px"
+              className="origin-bottom-right scale-[1.12] object-contain object-right-bottom"
             />
           </div>
 
