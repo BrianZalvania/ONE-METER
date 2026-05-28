@@ -181,15 +181,15 @@ export default function Step3({ amount, setStep }: Props) {
           <button
             onClick={handleContinue}
             disabled={loading}
-            className={`mt-2.5 flex w-full items-center justify-center gap-3 rounded-xl px-5 py-2.5 text-[14px] font-bold text-white shadow-[0_14px_35px_rgba(22,101,52,0.32)] transition-all duration-300 md:mt-4 md:py-4 md:text-[18px] ${
+            className={`relative mt-2.5 flex w-full items-center justify-center rounded-xl px-14 py-2.5 text-center text-[14px] font-bold text-white shadow-[0_14px_35px_rgba(22,101,52,0.32)] transition-all duration-300 md:mt-4 md:py-4 md:text-[18px] ${
               loading
                 ? "cursor-not-allowed bg-green-900/70"
                 : "bg-green-700 hover:scale-[1.01] hover:bg-green-800"
             }`}
           >
-            {loading ? "Guardando..." : "Quiero acceso anticipado"}
+            {loading ? "Guardando..." : "Continuar"}
 
-            <span className="ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-700 md:h-9 md:w-9">
+            <span className="absolute right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-700 md:h-9 md:w-9">
               <ArrowRight size={21} strokeWidth={3} />
             </span>
           </button>

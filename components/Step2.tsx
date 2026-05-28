@@ -193,7 +193,7 @@ export default function Step2({ amount, setStep }: Props) {
             onClick={() => setStep(3)}
             className="mt-2 flex w-full items-center justify-center gap-3 rounded-xl bg-green-700 px-5 py-3 text-[14px] font-bold text-white shadow-[0_14px_35px_rgba(22,101,52,0.30)] transition-all duration-300 hover:scale-[1.01] hover:bg-green-800 md:mt-4 md:py-4 md:text-[16px]"
           >
-            Quiero empezar ahora
+            Continuar
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-green-700 md:h-9 md:w-9">
               <ArrowRight size={21} strokeWidth={3} />
             </span>
